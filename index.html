@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Cours D</title>
+
+    <meta charset="utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="reveal.js/css/reveal.css">
+    <link rel="stylesheet" href="reveal.js/css/theme/blood.css">
+    <link rel="stylesheet" href="monokai-sublime.css">
+    <link rel="stylesheet" href="index.css">
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <!-- TAG#0 -->
+
+            <section>
+                <section>
+                    <h1>Le langage</h1>
+                    <img src="http://dlang.org/images/dlogo.svg" width="800">
+                </section>
+
+                <section>
+                    <h2>Qui suis-je ?</h2>
+                    <h3>Laurent Tréguier</h3>
+                    <p>Etudiant en CIR3 à l'ISEN</p>
+                    <a href="mailto:laurent.treguier@isen-bretagne.fr">laurent.treguier@isen-bretagne.fr</a>
+                </section>
+
+                <section>
+                    <h2>Sommaire</h2>
+
+                    <ol>
+                        <li>Un peu d'histoire</li>
+                        <li>Qu'est-ce que c'est ?</li>
+                        <li>Le langage lui-même</li>
+                        <li>Pour aller plus loin</li>
+                    </ol>
+                </section>
+
+                <section>
+                    <h2>Un peu d'histoire</h2>
+
+                    <img src="http://walterbright.com/wblogo.jpg" height="250">
+                    <img src="http://dconf.org/2014/images/alexandrescu_134.jpg" height="250">
+                    <p>Walter Bright et Andrei Alexandrescu</p>
+                </section>
+
+                <section>
+                    <h3>Quelques dates</h3>
+
+                    <ul>
+                        <li>Débuts en <b>2001</b></li>
+                        <li>D version 1.0 en <b>janvier 2007</b></li>
+                        <li>D version 2.0 en <b>juin 2007</b></li>
+                        <li>D 1.0 abandonné le <b>31 décembre 2012</b></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Aujourd'hui</h3>
+
+                    <ul>
+                        <li>D1 obsolète</li>
+                        <li>D2 en version 2.071</li>
+                        <li>
+                            3 compilateurs principaux :
+
+                            <ul>
+                                <li><b>dmd</b>, la référence</li>
+                                <li><b>ldc</b>, basé sur llvm</li>
+                                <li><b>gdc</b>, basé sur gcc</li>
+                            </ul>
+                        </li>
+                        <li>Une seule bibliothèque standard</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- TAG#1 -->
+
+            <section>
+                <section>
+                    <h2>Qu'est-ce que c'est ?</h2>
+                </section>
+
+                <section>
+                    <h3>C'est comme le C/C++</h3>
+
+                    <ul>
+                        <li>Langage compilé vers du code natif</li>
+                        <li>Fortement typé</li>
+                        <li>Des pointeurs</li>
+                        <li>Surcharges d'opérateurs</li>
+                        <li>Templates</li>
+                        <li>Interfaçage complet avec le C, partiel avec le C++</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>C'est comme le Java</h3>
+
+                    <ul>
+                        <li>Garbage collector</li>
+                        <li>Type référence (plus besoin de pointeurs)</li>
+                        <li>Héritage d'une classe, plusieurs interfaces</li>
+                        <li>Modules</li>
+                        <li>1 module = 1 fichier -&gt; plus de .h</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>C'est comme le Python</h3>
+
+                    <ul>
+                        <li>Programmation fonctionelle</li>
+                        <li>Fonctions anonymes</li>
+                        <li>Fonctions nestées</li>
+                        <li>Evaluation paresseuse</li>
+                        <li>Typage automatique (inférence)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Et plein d'autres trucs</h3>
+
+                    <ul>
+                        <li>Delegates</li>
+                        <li>Programmation par contrat</li>
+                        <li>Test unitaires</li>
+                        <li>Fonctions <b>@safe</b>, <b>@trusted</b> ou <b>@system</b></li>
+                        <li>Multi plate-forme</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- TAG#2 -->
+
+            <section>
+                <section>
+                    <h2>Hello world !</h2>
+
+                    <pre><code class="d" data-trim="true">
+import std.stdio;
+
+int main(string[] args)
+{
+    writeln("Hello world !");
+    return 0;
+}
+                    </code></pre>
+
+                    <!-- <a class="editor-button" href="javascript:void(0)">Editer</a> -->
+
+                    <pre class="fragment"><code class="text" data-trim="true">
+$ dmd main.d
+$ ./main
+Hello world !
+                    </code></pre>
+
+                    <pre class="fragment"><code class="text" data-trim="true">
+$ rdmd main.d
+Hello world !
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Comparaison</h3>
+
+                    <p>En C :</p>
+                    <pre><code class="c" data-trim="true">
+#include &lt;stdio.h&gt;
+
+int main(int argc, char** argv)
+{
+    printf("Hello world !\n");
+    return 0;
+}
+                    </code></pre>
+
+                    <p>En D :</p>
+                    <pre><code class="d" data-trim="true">
+import std.stdio;
+
+int main(string[] args)
+{
+    writeln("Hello world !");
+    return 0;
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Hello world !</h3>
+
+                    <pre><code class="d" data-trim="true">
+int main(string[] args)
+{
+    import std.stdio; // import à l'intérieur
+
+    writeln("Hello world !");
+    return 0;
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Hello world !</h3>
+
+                    <pre><code class="d" data-trim="true">
+int main(string[] args)
+{
+    import std.stdio;
+
+    void hello() // les fonctions aussi
+    {
+        writeln("Hello world !");
+    }
+
+    hello();
+    return 0;
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Hello world !</h3>
+
+                    <pre><code class="d" data-trim="true">
+int main(string[] args)
+{
+    class Hello // les classes aussi
+    {
+        import std.stdio; // et sans limite de profondeur !
+
+        void say()
+        {
+            writeln("Hello world !");
+        }
+    }
+
+    Hello myHello = new Hello();
+    myHello.say();
+    return 0;
+}
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- TAG#3 -->
+
+            <section>
+                <section>
+                    <h3>Gestion de la mémoire</h3>
+
+                    <pre><code class="d" data-trim="true">
+class Hello
+{
+    void say()
+    {
+        import std.stdio;
+        writeln("Hello world !");
+    }
+}
+
+int main(string[] args)
+{
+    Hello myHello = new Hello(); // pas de malloc
+    myHello.say();
+    return 0; // pas besoin de free/delete
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Gestion de la mémoire</h3>
+
+                    <pre><code class="d" data-trim="true">
+import core.stdc.stdlib;
+import core.stdc.stdio;
+import core.stdc.string;
+
+int main(string[] args)
+{
+    char* ptr = cast(char*) malloc(15 * char.sizeof);
+
+    strcpy(ptr, "Hello world !\n\0");
+    printf(ptr);
+
+    free(ptr); // enfin, on peut en faire... c'est juste moche
+
+    return 0;
+}
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- TAG#4 -->
+
+            <section>
+                <section>
+                    <h2>Les types</h2>
+
+                    <table>
+                        <tr>
+                            <th><b>Type</b></th>
+                            <th><b>Init</b></th>
+                            <th><b>Description</b></th>
+                        </tr>
+                        <tr>
+                            <td>void </td>
+                            <td>-</td>
+                            <td>pas de type</td>
+                        </tr>
+                        <tr>
+                            <td>bool</td>
+                            <td>false</td>
+                            <td>booléen</td>
+                        </tr>
+                        <tr>
+                            <td>byte</td>
+                            <td>0</td>
+                            <td>8 bits</td>
+                        </tr>
+                        <tr>
+                            <td>ubyte</td>
+                            <td>0</td>
+                            <td>8 bits, non signé</td>
+                        </tr>
+                        <tr>
+                            <td>short</td>
+                            <td>0</td>
+                            <td>16 bits</td>
+                        </tr>
+                        <tr>
+                            <td>ushort</td>
+                            <td>0</td>
+                            <td>16 bits, non signé</td>
+                        </tr>
+                        <tr>
+                            <td>int</td>
+                            <td>0</td>
+                            <td>32 bits</td>
+                        </tr>
+                        <tr>
+                            <td>uint</td>
+                            <td>0</td>
+                            <td>32 bits, non signé</td>
+                        </tr>
+                    </table>
+                </section>
+
+                <section>
+                    <table>
+                        <tr>
+                            <th><b>Type</b></th>
+                            <th><b>Init</b></th>
+                            <th><b>Description</b></th>
+                        </tr>
+                        <tr>
+                            <td>long</td>
+                            <td>0L</td>
+                            <td>64 bits</td>
+                        </tr>
+                        <tr>
+                            <td>ulong</td>
+                            <td>0L</td>
+                            <td>64 bits, non signé</td>
+                        </tr>
+                        <tr>
+                            <td>cent</td>
+                            <td>0</td>
+                            <td>128 bits (réservé)</td>
+                        </tr>
+                        <tr>
+                            <td>ucent</td>
+                            <td>0</td>
+                            <td>128 bits, non signé (réservé)</td>
+                        </tr>
+                        <tr>
+                            <td>float</td>
+                            <td>float.nan</td>
+                            <td>32 bit, flotant</td>
+                        </tr>
+                        <tr>
+                            <td>double</td>
+                            <td>double.nan</td>
+                            <td>64 bit, flotant</td>
+                        </tr>
+                        <tr>
+                            <td>real</td>
+                            <td>real.nan</td>
+                            <td>le plus gros flotant possible</td>
+                        </tr>
+                    </table>
+                </section>
+
+                <section>
+                    <table>
+                        <tr>
+                            <th><b>Type</b></th>
+                            <th><b>Init</b></th>
+                            <th><b>Description</b></th>
+                        </tr>
+                        <tr>
+                            <td>char</td>
+                            <td>0xFF</td>
+                            <td>8 bit (UTF-8)</td>
+                        </tr>
+                        <tr>
+                            <td>wchar</td>
+                            <td>0xFFFF</td>
+                            <td>16 bit (UTF-16)</td>
+                        </tr>
+                        <tr>
+                            <td>dchar</td>
+                            <td>0x0000FFFF</td>
+                            <td>32 bit (UTF-32)</td>
+                        </tr>
+                        <tr>
+                            <td>string</td>
+                            <td>""</td>
+                            <td>chaîne de caractères (UTF-8)</td>
+                        </tr>
+                        <tr>
+                            <td>wstring</td>
+                            <td>""</td>
+                            <td>chaîne de caractères (UTF-16)</td>
+                        </tr>
+                        <tr>
+                            <td>dstring</td>
+                            <td>""</td>
+                            <td>chaîne de caractères (UTF-32)</td>
+                        </tr>
+                        <tr>
+                            <td>Object</td>
+                            <td>null</td>
+                            <td>object</td>
+                        </tr>
+                    </table>
+                </section>
+
+                <section>
+                    <h3>Les propriétés</h3>
+
+                    <pre><code class="d" data-trim="true">
+class Test
+{
+    int member;
+}
+
+Test myTest = new Test();
+
+writeln(Test.init); // null
+writeln(Test.sizeof) // 8
+writeln(myTest.stringof) // "myTest" en général
+writeln(myTest.classinfo.name) // "Test"
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>L'inférence de type</h3>
+
+                    <pre><code class="d" data-trim="true">
+import std.conv;
+
+auto str = "42";
+auto num = to!int(str);
+auto flt = num.to!float();
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>L'inférence de type</h3>
+
+                    <p>En C :</p>
+                    <pre><code class="c" data-trim="true">
+int (*pointer)(double a, char b) = &amp;myFunction; // beurk
+                    </code></pre>
+
+                    <p>En D :</p>
+                    <pre><code class="d" data-trim="true">
+auto pointer = &amp;myFunction;
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Valeurs et références</h3>
+
+                    <div>
+                        <h4>Types valeurs</h4>
+
+                        <ol>
+                            <li>types de base (int, char...)</li>
+                            <li>tableaux statiques</li>
+                            <li>structs</li>
+                        </ol>
+                    </div>
+
+                    <br>
+
+                    <div>
+                        <h4>Types références</h4>
+
+                        <ol>
+                            <li>tableaux dynamiques</li>
+                            <li>objets</li>
+                            <li>fonctions</li>
+                        </ol>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Const et immutable</h3>
+
+                    <pre><code class="d" data-trim="true">
+int a = 42;
+const(int) b = a;
+immutable(int) c = a;
+
+a = 12; // OK
+b = 12; // Erreur
+c = 12; // Erreur
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Const et immutable</h3>
+
+                    <pre><code class="d" data-trim="true">
+auto a = new Object(); // inférence de type
+const b = a;
+immutable c = a; // Erreur... Déjà ici !?
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Const</h3>
+
+                    <p>Concerne la <b>variable</b></p>
+                    <p>On peut modifier la valeur d'origine seulement par une autre variable qui n'est pas <b>const</b></p>
+                </section>
+
+                <section>
+                    <h3>Immutable</h3>
+
+                    <p>Concerne la <b>valeur</b></p>
+                    <p>La valeur doit pouvoir être mise en ROM; <b>rien</b> ne peut la modifier</p>
+                </section>
+
+                <section>
+                    <h3>Les pointeurs</h3>
+
+                    <pre><code class="d" data-trim="true">
+int value = 42;
+int* p = null;
+
+p = &amp;value;
+writeln("adresse : ", p); // 7FFD24AA32A8 (par exemple)
+writeln("valeur : ", *p); // 42
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- TAG#5 -->
+
+            <section>
+                <section>
+                    <h2>Les tableaux</h2>
+
+                    <ul>
+                        <li>tableaux de taille fixe</li>
+                        <li>tableaux dynamiques</li>
+                        <li>tableaux associatifs</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Les tableaux de taille fixe</h3>
+
+                    <p>Type : valeur</p>
+                    <pre><code class="d" data-trim="true">
+int[3] basic;
+int[3] initialized = [1, 2, 3];
+
+basic = initialized;
+
+writeln(basic == initialized); // true
+                    </code></pre>
+
+                    <pre class="fragment"><code class="d" data-trim="true">
+writeln(basic is initialized); // false
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Les tableaux dynamiques</h3>
+
+                    <p>Type : référence</p>
+                    <pre><code class="d" data-trim="true">
+int[] basic;
+int[] initialized = [1, 2, 3];
+
+basic = initialized;
+
+writeln(basic == initialized); // true
+writeln(basic is initialized); // true
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Les tableaux associatifs</h3>
+
+                    <p>Type : référence</p>
+                    <pre><code class="d" data-trim="true">
+int[string] basic;
+int[string] initialized = ["a": 1, "b": 2, "c": 3];
+
+initialized["something"] = 42;
+writeln(initialized["something"]);
+writeln(initialized["wrong value"]); // erreur : Range Violaton
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>La concaténation</h3>
+
+                    <pre><code class="d" data-trim="true">
+int[3] first = [1, 2, 3];
+int other = 4;
+
+writeln(first + other);
+                    </code></pre>
+
+                    <pre class="fragment"><code class="text" data-trim="true">
+Error: incompatible types for ((first) + (4)): 'int[3]' and 'int'
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>La concaténation</h3>
+
+                    <pre><code class="d" data-trim="true">
+int[3] first = [1, 2, 3];
+int other = 4;
+
+writeln(first ~ other);
+                    </code></pre>
+
+                    <pre class="fragment"><code class="text" data-trim="true">
+[1, 2, 3, 4]
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Les opérateurs spéciaux</h3>
+
+                    <pre><code class="d" data-trim="true">
+int[5] array = [0, 1, 2, 3, 4];
+
+writeln(array[$ - 1]); // 4
+writeln(array[1..3]); // [1, 2]
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- TAG#6 -->
+
+            <section>
+                <section>
+                    <h2>Enums, unions, structs, interfaces, classes</h2>
+
+                    <table class="centered">
+                        <th>
+                            <tr>
+                                <td>Type</td>
+                                <td>Comme en C/C++</td>
+                                <td>Comme en Java</td>
+                            </tr>
+                        </th>
+
+                        <tbody>
+                            <tr>
+                                <td>Enums</td>
+                                <td>X</td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td>Unions</td>
+                                <td>X</td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td>Structs</td>
+                                <td>X</td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td>Interfaces</td>
+                                <td></td>
+                                <td>X</td>
+                            </tr>
+
+                            <tr>
+                                <td>Classes</td>
+                                <td></td>
+                                <td>X</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section>
+                    <h3>Les enums</h3>
+
+                    <pre><code class="d" data-trim="true">
+enum Color
+{
+    Red = 0xFF0000,
+    Green = 0x00FF00,
+    Blue = 0x0000FF
+}
+
+auto c = Color.Red;
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Les unions</h3>
+
+                    <pre><code class="d" data-trim="true">
+union JSONValue
+{
+    float num;
+    string str;
+}
+
+JSONValue val;
+
+val.num = 42;
+val.str = "Hello";
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Les structs</h3>
+
+                    <pre><code class="d" data-trim="true">
+struct Rect
+{
+    private int x;
+    private int y;
+    private int width;
+    private int height;
+}
+
+auto r = Rect(2, 3, 1, 4); // Pas de `new`
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Les interfaces</h3>
+
+                    <pre><code class="d" data-trim="true">
+interface Printable
+{
+    public void print();
+}
+
+class Document : Printable
+{
+    private string name;
+
+    public void print()
+    {
+        writeln(name);
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Les classes</h3>
+
+                    <pre><code class="d" data-trim="true">
+class Hello
+{
+    private string name;
+
+    this(string name)
+    {
+        // Constructeur
+        this.name = name;
+    }
+
+    ~this()
+    {
+        // Destructeur
+    }
+}
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- TAG#7 -->
+
+            <section>
+                <section>
+                    <h2>Les outils de qualité</h2>
+
+                    <ul>
+                        <li>La programmation par contrat</li>
+                        <li>Les tests unitaires</li>
+                        <li>@safe, @trusted, @system</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>La programmation par contrat</h3>
+
+                    <pre><code class="d" data-trim="true">
+float sqrt(float a)
+in
+{
+    assert(a &gt;= 0);
+}
+out(result)
+{
+    assert(a &gt;= 0);
+}
+body
+{
+    static import std.math;
+    return std.math.sqrt(a);
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>les tests unitaires</h3>
+
+                    <pre><code class="d" data-trim="true">
+float sqrt(float a)
+{
+    static import std.math;
+    return std.math.sqrt(a);
+}
+
+unittest
+{
+    assert(sqrt(0) == 0);
+    assert(sqrt(1) == 1);
+    assert(sqrt(4) == 2);
+}
+                    </code></pre>
+
+                    <pre><code class="text" data-trim="true">
+rdmd -unittest -main sqrt.d
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Static assert</h3>
+
+                    <pre><code class="d" data-trim="true">
+static assert(sqrt(4) == 2);
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>@safe, @trusted, @system</h3>
+
+                    <ul>
+                        <li>
+                            <b>@safe</b> :
+                            <ul>
+                                <li>Pas d'assembleur</li>
+                                <li>Pas d'appel à des fonctions <b>@system</b></li>
+                                <li>Pas de trucs bizarres de façon générale</li>
+                            </ul>
+                        </li>
+
+                        <li><b>@trusted</b> : Comme <b>@safe</b>, sauf qu'on ne peut pas prouver que la fonction est sûre (bibliothèque C...)</li>
+                        <li><b>@system</b> : tout est autorisé; valeur par défault</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- TAG#8 -->
+
+            <section>
+                <section>
+                    <h2>Pendant la compilation...</h2>
+
+                    <pre><code class="d" data-trim="true">
+mixin(`writeln("Hello mixins !");`);
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>La CTFE</h3>
+
+                    <pre><code class="d" data-trim="true">
+string hello()
+{
+    return "Hello !";
+}
+
+mixin(`writeln("` ~ hello() ~ `");`);
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>La compilation conditionelle</h3>
+
+                    <pre><code class="d" data-trim="true">
+static if(DEBUG)
+{
+    writeln("debugging");
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>La compilation conditionelle</h3>
+
+                    <pre><code class="d" data-trim="true">
+version(Windows)
+{
+    writeln("Beurk");
+}
+else
+{
+    writeln("Good choice");
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Les traits</h3>
+
+                    <pre><code class="d" data-trim="true">
+int a = 42;
+string b = "Hello";
+assert(__traits(isArithmetic, num)); // Ok
+assert(__traits(isArithmetic, str)); // Error
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Quelques exemples</h3>
+
+                    <ul>
+                        <li>isStaticFunction</li>
+                        <li>identifier</li>
+                        <li>getMember</li>
+                        <li>allMembers</li>
+                    </ul>
+
+                    <pre><code class="d" data-trim="true">
+auto a = new Object();
+
+foreach(m; __traits(allMembers, Test))
+{
+    writeln(m);
+}
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- TAG#9 -->
+
+            <section>
+                <section>
+                    <h2>Les templates</h2>
+
+                    <pre><code class="d" data-trim="true">
+auto a = "42".to!int(); // ???
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Les templates</h3>
+
+                    <pre><code class="d" data-trim="true">
+int triple(int a) { return a * 3; }
+long triple(long a) { return a * 3; }
+float triple(float a) { return a * 3; }
+double triple(double a) { return a * 3; }
+real triple(real a) { return a * 3; }
+/* Et maintenant, pour tous les types non signés !
+ * Dans la joie et la bonne humeur... */
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Les fonctions templates</h3>
+
+                    <pre><code class="d" data-trim="true">
+T triple(T)(T a)
+{
+    return a * 3;
+}
+
+writeln(triple!int(42));
+writeln(triple!double(42.3));
+writeln(triple(42.3)); // Pas besoin du type s'il est déduisible
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Les classes templates</h3>
+
+                    <pre><code class="d" data-trim="true">
+class Hello(T)
+{
+    private T member;
+
+    public T getMember()
+    {
+        return member;
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>La surchage d'opérateurs</h3>
+
+                    <pre><code class="d" data-trim="true">
+class Vector
+{
+    private float x;
+    private float y;
+
+    public Vector opBinary(string op)(Vector other)
+    {
+        auto result = new Vector();
+
+        result.x = x;
+        result.y = y;
+        mixin("result.x" ~ op ~ "= other.x;");
+        mixin("result.y" ~ op ~ "= other.y;");
+
+        return result;
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Opérateurs</h3>
+
+                    <table>
+                        <tr>
+                            <td>opBinary</td>
+                            <td>a + 4</td>
+                        </tr>
+                        <tr>
+                            <td>opCmp</td>
+                            <td>a &lt; 4</td>
+                        </tr>
+                        <tr>
+                            <td>opAssign</td>
+                            <td>a = 4</td>
+                        </tr>
+                        <tr>
+                            <td>opOpAssign</td>
+                            <td>a += 4</td>
+                        </tr>
+                        <tr>
+                            <td>opCall</td>
+                            <td>a()</td>
+                        </tr>
+                        <tr>
+                            <td>opCast</td>
+                            <td>cast(int) a</td>
+                        </tr>
+                        <tr>
+                            <td>opDispatch</td>
+                            <td>a.bvsovbsdi()</td>
+                        </tr>
+                    </table>
+                </section>
+
+                <section>
+                    <h3>Les opérateurs</h3>
+
+                    <table>
+                        <tr>
+                            <td>opIndex</td>
+                            <td>a[4]</td>
+                        </tr>
+                        <tr>
+                            <td>opIndexAssign</td>
+                            <td>a[4] = 42</td>
+                        </tr>
+                        <tr>
+                            <td>opIndexUnary</td>
+                            <td>++a[4]</td>
+                        </tr>
+                        <tr>
+                            <td>opIndexOpAssign</td>
+                            <td>a[4] += 42</td>
+                        </tr>
+                        <tr>
+                            <td>opDollar</td>
+                            <td>a[$ - 4]</td>
+                        </tr>
+                        <tr>
+                            <td>opSlice</td>
+                            <td>a[4..42]</td>
+                        </tr>
+                    </table>
+                </section>
+            </section>
+
+            <!-- TAG#10 -->
+
+            <section>
+                <section>
+                    <h2>Et ce n'est pas fini...</h2>
+
+                    <ul>
+                        <li>Pragmas</li>
+                        <li>La programmation fonctionelle</li>
+                        <li>Couverture de code</li>
+                        <li>Interfaçage avec du C</li>
+                        <li>Dub, le gestionaire de paquets</li>
+                        <li>Template mixins</li>
+                        <li>Assembleur x86 dans le code</li>
+                        <li>Le multithreading</li>
+                        <li>Toute la bibliothèque standard</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Des questions ?</h3>
+
+                    <ul>
+                        <p>Site officiel du D : <a href="http://dlang.org">http://dlang.org</a></p>
+                        <p>Forum officiel du D : <a href="http://forum.dlang.org">http://forum.dlang.org</a></p>
+                        <p>Wiki officiel du D : <a href="http://wiki.dlang.org">http://wiki.dlang.org</a></p>
+                        <p>Programming in D : <a href="http://ddili.org/ders/d.en/index.html">http://ddili.org/ders/d.en/index.html</a></p>
+                    </ul>
+                </section>
+            </section>
+        </div>
+    </div>
+
+    <script src="reveal.js/lib/js/head.min.js"></script>
+    <script src="reveal.js/js/reveal.js"></script>
+
+    <script>
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            history: true,
+            center: true,
+            slideNumber: true,
+
+            transition: 'slide',
+
+            dependencies: [{
+                src: 'reveal.js/plugin/highlight/highlight.js',
+                async: true,
+                callback: function() {
+                    hljs.initHighlightingOnLoad();
+                }
+            }]
+        });
+    </script>
+</body>
+
+</html>
